@@ -1,0 +1,7 @@
+strings.exe		Mostra le stringhe all'interno di un binario
+				es: string.exe prog.exe
+				
+				
+file			(comando Linux)
+				Restituisce il mime type di un file
+				es: file -b −-mime-type test.ext

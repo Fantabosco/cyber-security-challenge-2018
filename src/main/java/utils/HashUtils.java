@@ -6,15 +6,25 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashUtils {
 	
-	/**
-	 * Return SHA-256 hash of input string
-	 * @param input
-	 * @return
-	 */
+	private HashUtils() {
+	}
+	
 	public static String getSHA256(String input) {
+		return getHash(input, "SHA-256");
+	}
+		
+	public static String getSHA1(String input) {
+		return getHash(input, "SHA-1");
+	}
+	
+	public static String getMD5(String input) {
+		return getHash(input, "MD5");
+	}
+	
+	private static String getHash(String input, String algorithm) {
 		MessageDigest digest = null;
 		try {
-			digest = MessageDigest.getInstance("SHA-256");
+			digest = MessageDigest.getInstance(algorithm);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
@@ -23,11 +33,13 @@ public class HashUtils {
 	}
 	
 	private static String bytesToHex(byte[] hash) {
-	    StringBuffer hexString = new StringBuffer();
+	    StringBuilder hexString = new StringBuilder();
 	    for (int i = 0; i < hash.length; i++) {
-	    String hex = Integer.toHexString(0xff & hash[i]);
-	    if(hex.length() == 1) hexString.append('0');
-	        hexString.append(hex);
+		    String hex = Integer.toHexString(0xff & hash[i]);
+		    if(hex.length() == 1) {
+		    	hexString.append('0');
+		    }
+		    hexString.append(hex);
 	    }
 	    return hexString.toString();
 	}

@@ -1,4 +1,4 @@
-package challengefile_scrambledwords;
+package training.scrambledwords;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,17 +11,17 @@ import utils.FileUtils;
 public class Main {
 
 	public static void main(String[] args) {
-		List<String> dictionaryFile = FileUtils.readFile("challenge-file_scrambled-words/dictionary.txt");
-		List<String> scrambledWordsFile = FileUtils.readFile("challenge-file_scrambled-words/scrambled-words.txt");
+		List<String> dictionaryFile = FileUtils.readFile("training/scrambled-words/dictionary.txt");
+		List<String> scrambledWordsFile = FileUtils.readFile("training/scrambled-words/scrambled-words.txt");
 		
-		Map<String,String> dictionary = new HashMap<String,String>();
+		Map<String,String> dictionary = new HashMap<>();
 		for(String word : dictionaryFile) {
 			String normalizedWord = normalizeWord(word);
 			if(normalizedWord.length() > 0) {
 				dictionary.put(normalizedWord, word);
 			}
 		}
-		List<String> scrambledWords = new ArrayList<String>();
+		List<String> scrambledWords = new ArrayList<>();
 		for(String word : scrambledWordsFile) {
 			String normalizedWord = normalizeWord(word);
 			if(normalizedWord.length() > 0) {
@@ -50,7 +50,7 @@ public class Main {
 	 */
 	private static String normalizeWord(String word) {
 		String ret = word.trim();
-		List<Character> list = new ArrayList<Character>();
+		List<Character> list = new ArrayList<>();
 		for(char c : ret.toCharArray()) {
 			list.add(c);
 		}

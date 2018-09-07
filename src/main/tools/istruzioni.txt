@@ -1,2 +1,0 @@
-strings.exe		Mostra le stringhe all'interno di un binario
-				es: string.exe prog.exe 

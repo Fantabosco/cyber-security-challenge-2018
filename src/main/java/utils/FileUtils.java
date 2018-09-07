@@ -9,8 +9,11 @@ import java.util.List;
 
 public class FileUtils {
 	
+	private FileUtils() {
+	}
+	
 	public static List<String> readFile(String fileName) {
-		List<String> output = new ArrayList<String>();
+		List<String> output = new ArrayList<>();
 		BufferedReader br = null;
 		InputStream is = null;
 		try {
@@ -22,8 +25,13 @@ public class FileUtils {
 			while ((sCurrentLine = br.readLine()) != null) {
 				output.add(sCurrentLine);
 			}
+		} catch (NullPointerException e) {
+			System.err.println("File not found in classpath: " + fileName);
+			e.printStackTrace();
+			System.exit(1);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(1);
 		} finally {
 			try {
 				if (br != null) {
@@ -33,9 +41,7 @@ public class FileUtils {
 					is.close();
 				}
 			} catch (IOException ex) {
-
 				ex.printStackTrace();
-
 			}
 		}
 		return output;
