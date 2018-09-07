@@ -7,8 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import utils.FileUtils;
+import utils.HashUtils;
 
-public class Main {
+public class ScrambledWords {
+	
+	/**
+	 * The SHA-256 hash of the concatenated unscrambled words will be *the content* of the flag and it needs to be converted to lowercase.
+	 * To get the complete flag, insert the lowercase string obtained between “{FLG:” and “}” without any blank space after the “:” and before the “}”.
+	 * Consider UTF-8 as the character encoding. Unscrambled words must have the same order of scrambled ones and they must be concatenated without spaces.
+	 */
 
 	public static void main(String[] args) {
 		List<String> dictionaryFile = FileUtils.readFile("training/scrambled-words/dictionary.txt");
@@ -36,15 +43,9 @@ public class Main {
 			}
 		}
 				
-		generateFlag(solution.toString());
+		HashUtils.generateFlag(solution.toString());
 	}
-	
-	private static String generateFlag(String solution) {
-		String flag = "{FLG:" + utils.HashUtils.getSHA256(solution).toLowerCase() + "}";
-		System.out.println("Soluzione: " + flag);
-		return flag;
-	}
-	
+
 	/**
 	 * Trim the input and sort the string characters alphabetically
 	 */
@@ -61,5 +62,4 @@ public class Main {
 		}
 		return sb.toString();
 	}
-
 }

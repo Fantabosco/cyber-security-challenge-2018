@@ -9,6 +9,12 @@ public class HashUtils {
 	private HashUtils() {
 	}
 	
+	public static String generateFlag(String solution) {
+		String flag = "{FLG:" + utils.HashUtils.getSHA256(solution).toLowerCase() + "}";
+		System.out.println("Soluzione: " + flag);
+		return flag;
+	}
+	
 	public static String getSHA256(String input) {
 		return getHash(input, "SHA-256");
 	}
