@@ -1,0 +1,65 @@
+<html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha256.js"></script>
+			
+	<script>
+
+		function hacked() {
+			document.getElementById("user").value = "h4ck3r";
+			
+		}
+
+		function auth() {
+			var key = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13\x00"); // TODO x00 è da sostituire con il carattere corretto
+			var password = document.getElementById("pass").value;
+			var t = false;
+	
+			key
+			
+			if(user == "\x68\x34\x63\x6b\x33\x72") {
+				// Esegue l'encryption con AES
+				var enc = CryptoJS.AES.encrypt(
+					password, // Messaggio da cifrare
+					CryptoJS.enc.Hex.parse(key.toString().substring(0,32)), // Chiave di cifratura
+					{
+						iv: CryptoJS.enc.Hex.parse(key.toString().substring(32,64)) // Vettore di inizializzazione
+					}
+				);
+				if(enc == "PKhuCrfh3RUw4vie3OMa8z4kcww1i7198ly0Q4rpuyA=") {
+					t = true;
+				}
+				
+				//TODO description senza sapere chiave e IV
+				var decrypted = CryptoJS.AES.decrypt("PKhuCrfh3RUw4vie3OMa8z4kcww1i7198ly0Q4rpuyA=",
+					key,	//TODO non la conosco (prima metà hash SHA256 di stringa incompleta)
+					{ 
+				    	iv: iv,	//TODO non lo conosco (seconda metà hash SHA256 di stringa incompleta)
+					}
+				);
+				if(decrypted === password) {
+					console.log("FLAG: " + password);
+					t = true;
+				}
+			} 
+	
+			if(t) {
+				document.write("Congratulations, you won! You can now submit the password as the FLAG of the challenge :-)");
+			} else {
+				document.write("Wrong credentials! :(");
+			}
+		}
+	</script>
+</head>
+<body onload="hacked()">
+	<form action="">
+		<label>Username</label>
+		<input type="text" id="user" name="username" />
+		<br>
+		<label>Password</label>
+		<input type="password" id="pass" name="password" />
+		<br>
+		<input type="submit" value="Login" onclick="auth()" />
+	</form>
+</body>
+</html>
