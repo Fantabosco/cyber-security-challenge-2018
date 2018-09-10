@@ -1,45 +1,69 @@
+<!doctype html>
 <html>
 <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	
+	<title>TYPE IT</title>
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha256.js"></script>
 			
 	<script>
+	
+		const ENCODED = "PKhuCrfh3RUw4vie3OMa8z4kcww1i7198ly0Q4rpuyA=";
 
-		function hacked() {
+		function checkKey(data, key) {
+			// Encrypt with AES
+			var enc = CryptoJS.AES.encrypt(
+				data, // Messagge
+				CryptoJS.enc.Hex.parse(key.toString().substring(0,32)), // Key
+				{
+					iv: CryptoJS.enc.Hex.parse(key.toString().substring(32,64)) // Initialization vector
+				}
+			);
+			return enc == ENCODED;
+		}
+		
+		function hex2a(hex) {
+		    var str = '';
+		    for (var i = 0; i < hex.length; i += 2)
+		        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+		    return str;
+		}
+		
+		function auth() {
 			document.getElementById("user").value = "h4ck3r";
 			
-		}
-
-		function auth() {
-			var key = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13\x00"); // TODO x00 è da sostituire con il carattere corretto
+			var key = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13\x00"); // TODO last char (\x00) must be found out
+			var user = document.getElementById("user").value;
 			var password = document.getElementById("pass").value;
 			var t = false;
-	
-			key
 			
 			if(user == "\x68\x34\x63\x6b\x33\x72") {
-				// Esegue l'encryption con AES
-				var enc = CryptoJS.AES.encrypt(
-					password, // Messaggio da cifrare
-					CryptoJS.enc.Hex.parse(key.toString().substring(0,32)), // Chiave di cifratura
-					{
-						iv: CryptoJS.enc.Hex.parse(key.toString().substring(32,64)) // Vettore di inizializzazione
-					}
-				);
-				if(enc == "PKhuCrfh3RUw4vie3OMa8z4kcww1i7198ly0Q4rpuyA=") {
-					t = true;
-				}
 				
-				//TODO description senza sapere chiave e IV
-				var decrypted = CryptoJS.AES.decrypt("PKhuCrfh3RUw4vie3OMa8z4kcww1i7198ly0Q4rpuyA=",
-					key,	//TODO non la conosco (prima metà hash SHA256 di stringa incompleta)
-					{ 
-				    	iv: iv,	//TODO non lo conosco (seconda metà hash SHA256 di stringa incompleta)
+				// Loop on all possible keys (brute force FTW)
+				for(var i=0x00; i<16*16; i++) {
+					var keyTmp = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13"+i.toString(16));
+					var decrypted = CryptoJS.AES.decrypt(
+						ENCODED, // Encoded message
+						CryptoJS.enc.Hex.parse(keyTmp.toString().substring(0,32)),	// Key
+						{ 
+					    	iv: CryptoJS.enc.Hex.parse(keyTmp.toString().substring(32,64)), // Initialization vector
+						}
+					).toString();
+					
+					// Convert from hex to ascii
+					decrypted = hex2a(decrypted);
+					
+					// Find a valid string
+					if(decrypted.length > 0) {
+						var result = checkKey(decrypted, keyTmp);
+						if(result) {
+							console.log("Flag: " + decrypted);
+							t = true;
+							break;
+						}
 					}
-				);
-				if(decrypted === password) {
-					console.log("FLAG: " + password);
-					t = true;
 				}
 			} 
 	
@@ -51,9 +75,9 @@
 		}
 	</script>
 </head>
-<body onload="hacked()">
-	<form action="">
-		<label>Username</label>
+<body>
+	<form action="#">
+		<label>User name</label>
 		<input type="text" id="user" name="username" />
 		<br>
 		<label>Password</label>
