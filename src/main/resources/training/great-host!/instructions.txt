@@ -1,0 +1,12 @@
+Apri wysiNwyg.zip --> estrai wysiNwyg e flag.zip
+Usa il comando file su wysiNwyg --> "ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, stripped"
+    Scarica un decompiler --> Snowman, http://derevenets.com/
+    Decompila wysiNwyg --> salva come wysiNwyg.c
+    
+    Scarica un debugger --> x64dbg, https://sourceforge.net/projects/x64dbg/files/snapshots/
+    
+    Attiva la feature di Windows "Windows Subsystem for Linux"
+    Installa dallo Store una distribuzione Linux
+    Lancia una sessione bash
+    Spostati nella cartella: cd /mnt/c/Dati/Generali/workspace/code-challenge-reply/cyber-security-challenge-2018/src/main/resources/training/great-host\!/wysiNwyg
+    Lancia il binario: ./wysiNwyg
