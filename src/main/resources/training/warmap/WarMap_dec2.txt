@@ -1,0 +1,4 @@
+La stringa era in binario
+Decodificata con: https://www.rapidtables.com/convert/number/binary-to-ascii.html
+ 
+Yikes, you did it! Your flag is: {FLG:YouCanFindTargetHostsOnThe4thFloorOfTheBuilding}

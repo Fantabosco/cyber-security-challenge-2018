@@ -1,0 +1,36 @@
+Apri il file .pcap con WireShark
+
+Source: 192.168.100.142:56594
+Destination: 192.168.32.129:3333
+IP privati 
+
+SYN: Inizializza una connessione, sincronizzando i sequence numbers
+ACK: Source conferma di aver ricevuto dati da Destination
+PSH: Source chiede a Destination di passare i dati allo strato applicativo
+RST: Source crede ci sia stato un errore e chiede un reset della connessione
+FIN: Termina una connessione, indicando la fine della trasmissione dei dati
+
+I pacchetti [PSH, ACK] contengono questo messaggio:
+	We just found the following encrypted message:
+	B2AocyFiD6zwZceRXPj8B0Q7ScVha8aewXSm80TQU7tdY9R1aZY171tCQTOZZSWuYGKcVZFvmpe8NCBb0jIW6wSczmyqs+owhPbFj4IXevmWaVxDjNQ97Skt7PIJcYSnrn/+Z5RJB8/c0RpQjtauzQoekKTnioQchB50FeEnagneY3A=
+	
+	We also found a public key, but we weren't able to decrypt the message. Are you able to do that?
+	-----BEGIN PUBLIC KEY-----
+	MIGhMA0GCSqGSIb3DQEBAQUAA4GPADCBiwKBgypWrOghw4Kj4fm5RT8PgS6IU85w
+	roqEljdvB/x+hEA1QvATpGvVZcOqmsiCM+3BdbcblsbGSHFNSYY/wisQUtUHWo5I
+	17TY1BX0jraqrvQl5ZLWY5Ie0xM6NF30gxLlYy+AKwAG/PryfclGmGpBTiw/JMNN
+	F0hz6S0M+BBgfT58SOU9AgMBAAE=
+	-----END PUBLIC KEY-----
+
+Abbiamo quindi un messaggio cifrato di 176 bytes, e una chiave pubblica RSA di dimensione 1024 bit.
+
+A 1024-bit RSA key invocation can encrypt a message up to 117 bytes, and results in a 128-byte value
+--> quindi il messaggio non può essere cifrato con questa chiave pubblica
+
+E' troppo lunga per essere una chiave RSA.
+Magari è un messaggio concatenato?
+B2AocyFiD6zwZceRXPj8B0Q7ScVha8aewXSm80TQU7tdY9R1aZY171tCQTOZZSWu
+YGKcVZFvmpe8NCBb0jIW6wSczmyqs+owhPbFj4IXevmWaVxDjNQ97Skt7PIJcYSn
+rn/+Z5RJB8/c0RpQjtauzQoekKTnioQchB50FeEnagneY3A=
+
+

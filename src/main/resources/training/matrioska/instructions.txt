@@ -1,0 +1,11 @@
+Usa il comando file per verificare il tipo di file --> zip
+Apri con 7z --> estrai il file contenuto
+(ripetere fino ad arrivare all'ultimo file "matrioska")
+Usa il comando file per verificare il tipo di file --> 
+	x86 boot sector, mkdosfs boot message display,
+	code offset 0x3c, OEM-ID "mkfs.fat",
+	sectors/cluster 4, root entries 512, sectors 400 (volumes <=32 MB),
+	Media descriptor 0xf8, sectors/FAT 1, heads 64,
+	serial number 0xb4c0042a, unlabeled, FAT (12 bit)
+Usa il comand strings per estrarre tutte le stringhe --> e0ZMRzpEM2NyeXB0MW5nQzBkZX0K
+Decode Base64 --> {FLG:D3crypt1ngC0de}
