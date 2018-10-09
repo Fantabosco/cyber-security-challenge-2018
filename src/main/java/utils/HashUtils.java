@@ -38,7 +38,7 @@ public class HashUtils {
 		return bytesToHex(hash);
 	}
 	
-	private static String bytesToHex(byte[] hash) {
+	public static String bytesToHex(byte[] hash) {
 	    StringBuilder hexString = new StringBuilder();
 	    for (int i = 0; i < hash.length; i++) {
 		    String hex = Integer.toHexString(0xff & hash[i]);

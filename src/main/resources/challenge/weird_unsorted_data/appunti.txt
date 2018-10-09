@@ -1,0 +1,6 @@
+I hashed all the strings containing sort indexes and shuffled the data structure.
+
+hashed = HASH like MD5?
+hashed = replaced by "#"s?
+
+Data at sorted positions multiple of 43210 will reveal it (the first sorted position is 0, the second sorted position is 1 and so on).
